@@ -11,13 +11,27 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    ListView timesTableListView;
+
+    public void generateTimesTable(int timesTable) {
+        ArrayList<String> timesTableContent = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++)
+            timesTableContent.add(Integer.toString(i * timesTable));
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, timesTableContent);
+
+        timesTableListView.setAdapter(arrayAdapter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         final SeekBar timesTableSeekBar = findViewById(R.id.timesTableSeekBar);
-        ListView timesTableListView = findViewById(R.id.timesTableListView);
+        timesTableListView = findViewById(R.id.timesTableListView);
 
         timesTableSeekBar.setMax(20);
         timesTableSeekBar.setProgress(10);
@@ -35,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                     timesTable = i;
 
-                Log.i("Seekbar value", Integer.toString(timesTable));
+                generateTimesTable(timesTable);
             }
 
             @Override
@@ -49,16 +63,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int timesTable= 10;
-        ArrayList<String> timesTableContent = new ArrayList<>();
+        generateTimesTable(10);
 
-        for (int i = 1; i <= 10; i++)
-            timesTableContent.add(Integer.toString(i * timesTable));
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, timesTableContent);
-
-        timesTableListView.setAdapter(arrayAdapter);
 
     }
 }
